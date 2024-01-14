@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\VerificationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,5 +24,9 @@ Route::post('profile', [ProfileController::class, 'update'])->name('profile.upda
 
 
 Auth::routes();
+Auth::routes(['verify' => true]);
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class , 'verify'])
+    ->name('verification.verify')
+    ->middleware('signed');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('/');

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -50,9 +52,24 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         //
+        $user = Auth::user();
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        # code...
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+
+        if ($user) {
+            return redirect()->back()->with('success', 'Profile Updated Successfully');
+        }else{
+            return redirect()->back()->with('error', 'Something Went Wrong');
+        }
     }
 
     /**

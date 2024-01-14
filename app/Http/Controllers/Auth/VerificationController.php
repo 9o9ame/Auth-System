@@ -20,13 +20,16 @@ class VerificationController extends Controller
     */
 
     use VerifiesEmails;
+// app/Http/Controllers/Auth/VerifyEmailController.php
+
+protected $redirectTo = '/login';
 
     /**
      * Where to redirect users after verification.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
